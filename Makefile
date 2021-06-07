@@ -6,7 +6,7 @@
 #    By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/07 18:20:56 by zqadiri           #+#    #+#              #
-#    Updated: 2021/06/07 19:26:35 by zqadiri          ###   ########.fr        #
+#    Updated: 2021/06/07 19:53:25 by zqadiri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,17 +29,18 @@ $(NAME): libft_all
 	@cp ./libft/libft.a .
 	@$(CC) $(FLAGS) $(SRCS) libft.a -o $(NAME)
 
-clean:
-	@$(RM) libft.a
+clean: libft_clean
+	@$(RM) libft.a 
 	@$(RM) $(OBJS)
-fclean: clean
+
+fclean: clean libft_fclean
 	@$(RM) $(NAME)
 
 re: fclean all
 
 libft_all:
-				make -C $(LIBFT_PATH) all
-				cp ./libft/libft.a libft.a
+			make -C $(LIBFT_PATH) all
+			cp ./libft/libft.a libft.a
 libft_clean:
 				make -C $(LIBFT_PATH) clean
 libft_fclean:
