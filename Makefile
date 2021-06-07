@@ -6,19 +6,21 @@
 #    By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/07 18:20:56 by zqadiri           #+#    #+#              #
-#    Updated: 2021/06/07 18:57:28 by zqadiri          ###   ########.fr        #
+#    Updated: 2021/06/07 19:26:35 by zqadiri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 
-SRCS = pipex.c
+SRCS = 	pipex.c \
+		helpers.c
 
 OBJS = $(SRCS:.c=.o)
 
 FLAGS= -Wall -Wextra -Werror
 RM = rm -f
 CC = gcc
+
 LIBFT_PATH = ./libft
 
 all: $(NAME)
