@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 18:20:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/07 18:36:23 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/07 18:45:30 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ int error_code(int code)
     return (1);
 }
 
+int parse_args(t_index *m)
+{
+    
+}
+
 int main(int argc, char **argv, char **envv)
 {
     t_index *m;
@@ -36,6 +41,7 @@ int main(int argc, char **argv, char **envv)
         init_struct(m);
         if (pipe(m->fd) == -1)
             error_code(1);
+        parse_args(m);
     }
     else
     {
