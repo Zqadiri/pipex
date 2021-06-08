@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 19:20:34 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/08 10:28:17 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/08 21:44:46 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	free_d_pointer(char **temp)
 	{
 		free(temp[i]);
 		temp[i] = NULL;
+		i++;
 	}
 	free(temp);
 	temp = NULL;
@@ -65,6 +66,8 @@ char	*get_path(char **envv)
 			return (path);
 		}
 		free_d_pointer(temp);
+		free(path);
+		path = NULL;
 		i++;
 	}
 	return (NULL);

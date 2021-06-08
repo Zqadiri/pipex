@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 18:20:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/08 14:14:41 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/08 21:45:12 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int	find_path(t_pipex *p, char	*cmd, char **final_path)
 {
 	char	*temp;
 	char	*possible_path;
+	char	*pfree;
 	int		i;
 	int		fd;
 
@@ -65,41 +66,57 @@ int	find_path(t_pipex *p, char	*cmd, char **final_path)
 	while (p->path[i])
 	{
 		temp = ft_strjoin(p->path[i], "/");
+		pfree = temp;
 		possible_path = ft_strjoin(temp, cmd);
+		free(temp);
 		fd = open(possible_path, O_RDONLY);
 		if (fd > 0)
 		{
 			*final_path = ft_strdup(possible_path);
+			free(possible_path);
+			possible_path = NULL;
 			return (1);
 		}
+		free(possible_path);
+		possible_path = NULL;
 		i++;
 	}
-	*final_path = ft_strdup(cmd);
 	return (0);
 }
 
 int	check_cmd_path(t_pipex *p, t_parse *pr)
 {
-	if (!ft_strncmp(pr->cmd_1[0], "/", 1) )
-		pr->is_absolute_1 = 1;
+	int ret;
+
+	ret = -1;
+	if (!ft_strncmp(pr->cmd_1[0], "/", 1))
+		pr->is_absolute_1 = 1;	
 	if (!ft_strncmp(pr->cmd_2[0], "/", 1))
 		pr->is_absolute_2 = 1;
 	if (!pr->is_absolute_1)
 		find_path(p, pr->cmd_1[0], &p->cmd_1_path);
+	else
+		p->cmd_1_path = ft_strdup(pr->cmd_1[0]);
 	if (!pr->is_absolute_2)
 		find_path(p, pr->cmd_2[0], &p->cmd_2_path);
+	else
+		p->cmd_2_path = ft_strdup(pr->cmd_2[0]);
 	return (1);
 }
 
 int	parse_args(t_pipex *p, char **argv, char **envv, t_parse *pr)
 {
+	char *pth;
+
+	pth = get_path(envv);
 	p->infile = ft_strdup(argv[1]);
 	p->outfile = ft_strdup(argv[4]);
 	pr->cmd_1 = ft_split(argv[2], ' ');
 	pr->cmd_2 = ft_split(argv[3], ' ');
-	p->path = ft_split(get_path(envv), ':');
+	p->path = ft_split(pth, ':');
 	if (p->path == NULL)
 		error_code (2, p, pr);
+	free(pth);
 	p->infile_fd = open(p->infile, O_RDWR);
 	if (p->infile_fd < 0)
 		error_code(3, p, pr);
