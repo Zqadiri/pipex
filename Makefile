@@ -6,14 +6,15 @@
 #    By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/07 18:20:56 by zqadiri           #+#    #+#              #
-#    Updated: 2021/06/07 19:53:25 by zqadiri          ###   ########.fr        #
+#    Updated: 2021/06/08 12:40:57 by zqadiri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 
 SRCS = 	pipex.c \
-		helpers.c
+		helpers.c \
+		exec.c
 
 OBJS = $(SRCS:.c=.o)
 

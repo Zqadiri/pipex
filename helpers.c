@@ -6,13 +6,11 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 19:20:34 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/07 21:02:10 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/08 10:28:17 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./pipex.h"
-
-// ! check memory LEAKS
+#include "pipex.h"
 
 void	free_d_pointer(char **temp)
 {
@@ -47,6 +45,8 @@ void	free_struct(t_pipex *p, t_parse *pr)
 	if (p->path)
 		free_d_pointer(p->path);
 }
+
+// ! check memory LEAKS
 
 char	*get_path(char **envv)
 {
@@ -94,4 +94,7 @@ void	print_args(t_parse *pr, t_pipex *p)
 		printf("path : %s\n", p->path[i]);
 		i++;
 	}
+	printf("cmd_1_path : %s\n", p->cmd_1_path);
+	printf("cmd_2_path : %s\n", p->cmd_2_path);
+	
 }

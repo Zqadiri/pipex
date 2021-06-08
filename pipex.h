@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 18:20:21 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/07 20:53:13 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/08 14:03:09 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ typedef struct s_parse
 {
 	char	**cmd_1;
 	char	**cmd_2;
+	int		is_absolute_1;
+	int		is_absolute_2;
 }	t_parse;
 
 typedef struct s_pipex
@@ -32,10 +34,17 @@ typedef struct s_pipex
 	int		outfile_fd;
 	int		fd[2];
 	char	**path;
+	char	*cmd_1_path;
+	char	*cmd_2_path;
+	int		pid;
 }	t_pipex;
 
 char	*get_path(char **envv);
 void	print_args(t_parse *pr, t_pipex *p);
 void	free_struct(t_pipex *p, t_parse *pr);
+void    execute_cmd_1(t_pipex *p, t_parse *pr, char **envv);
+void    execute_cmd_2(t_pipex *p, t_parse *pr, char **envv);
+void    to_the_next_cmd(t_pipex *p, t_parse *pr, char **envv);
+int		error_code(int code, t_pipex *p, t_parse *pr);
 
 #endif
