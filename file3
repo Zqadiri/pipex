@@ -1,0 +1,15 @@
+Makefile
+README.md
+cas
+dup.c
+exec.c
+file
+file1
+file3
+helpers.c
+libft
+libft.a
+outfile
+pipex
+pipex.c
+pipex.h

@@ -1,0 +1,10 @@
+./pipex '' '' '' ''
+bash: : command not found
+bash: : No such file or directory
+/pipex makefilebsjk ls ls file1
+
+
+
+
+./pipex makefile ls ls file1
+./pipex makefile sd ls file1

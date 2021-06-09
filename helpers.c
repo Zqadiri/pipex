@@ -6,11 +6,21 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 19:20:34 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/08 21:44:46 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/09 19:52:13 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	init_struct(t_pipex *p, t_parse *pr)
+{
+	p->infile = NULL;
+	p->infile_fd = 0;
+	p->outfile = NULL;
+	p->outfile_fd = 0;
+	pr->is_absolute_1 = 0;
+	pr->is_absolute_2 = 0;
+}
 
 void	free_d_pointer(char **temp)
 {
@@ -45,9 +55,9 @@ void	free_struct(t_pipex *p, t_parse *pr)
 	}
 	if (p->path)
 		free_d_pointer(p->path);
+	close(p->infile_fd);
+	close(p->outfile_fd);
 }
-
-// ! check memory LEAKS
 
 char	*get_path(char **envv)
 {
@@ -73,31 +83,31 @@ char	*get_path(char **envv)
 	return (NULL);
 }
 
-void	print_args(t_parse *pr, t_pipex *p)
+int	error_code(int code, t_pipex *p, t_parse *pr)
 {
-	int	i;
-
-	i = 0;
-	printf("infile : %s\n", p->infile);
-	printf("outfile : %s\n", p->outfile);
-	while (pr->cmd_1[i])
+	if (code == 1)
 	{
-		printf("cmd_1 : %s\n", pr->cmd_1[i]);
-		i++;
+		ft_putendl_fd("Pipe Failed!", 2);
+		free_struct(p, pr);
+		exit (EXIT_FAILURE);
 	}
-	i = 0;
-	while (pr->cmd_2[i])
+	if (code == 2)
 	{
-		printf("cmd_2 : %s\n", pr->cmd_2[i]);
-		i++;
+		ft_putendl_fd("PATH variable is missing!", 2);
+		free_struct(p, pr);
+		exit (EXIT_FAILURE);
 	}
-	i = 0;
-	while (p->path[i])
+	if (code == 3)
 	{
-		printf("path : %s\n", p->path[i]);
-		i++;
+		perror ("Error:");
+		// free_struct(p, pr);
+		// exit (EXIT_FAILURE);
 	}
-	printf("cmd_1_path : %s\n", p->cmd_1_path);
-	printf("cmd_2_path : %s\n", p->cmd_2_path);
-	
+	if (code == 4)
+	{
+		ft_putendl_fd("Fork Failed!", 2);
+		// free_struct(p, pr);
+		exit (EXIT_FAILURE);
+	}
+	return (1);
 }

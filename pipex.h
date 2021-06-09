@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 18:20:21 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/08 14:03:09 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/09 20:10:09 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,12 @@ typedef struct s_pipex
 }	t_pipex;
 
 char	*get_path(char **envv);
-void	print_args(t_parse *pr, t_pipex *p);
 void	free_struct(t_pipex *p, t_parse *pr);
-void    execute_cmd_1(t_pipex *p, t_parse *pr, char **envv);
-void    execute_cmd_2(t_pipex *p, t_parse *pr, char **envv);
-void    to_the_next_cmd(t_pipex *p, t_parse *pr, char **envv);
+void	execute_cmd_1(t_pipex *p, t_parse *pr, char **envv);
+void	execute_cmd_2(t_pipex *p, t_parse *pr, char **envv);
+void	to_the_next_cmd(t_pipex *p, t_parse *pr, char **envv);
 int		error_code(int code, t_pipex *p, t_parse *pr);
+void	init_struct(t_pipex *p, t_parse *pr);
+void	print_args(t_parse *pr, t_pipex *p);
 
 #endif
