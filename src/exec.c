@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 11:07:27 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/12 16:23:48 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/12 17:27:20 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ char	*get_path(char **envv)
 
 void	execute_cmd_1(t_pipex *p, t_parse *pr, char **envv)
 {
+	if (check_cmd_path(p->cmd_1_path) < 0)
+		return ;
 	if (p->infile_fd == -1)
 		return ;
 	dup2(p->infile_fd, 0);
@@ -68,6 +70,8 @@ void	execute_cmd_1(t_pipex *p, t_parse *pr, char **envv)
 
 void	execute_cmd_2(t_pipex *p, t_parse *pr, char **envv)
 {
+	if (check_cmd_path(p->cmd_2_path) < 0)
+		return ;
 	if (p->outfile_fd == -1)
 		return ;
 	dup2(p->fd[0], 0);
@@ -114,4 +118,6 @@ void	print_args(t_parse *pr, t_pipex *p)
 	}
 	printf("cmd_1_path : %s\n", p->cmd_1_path);
 	printf("cmd_2_path : %s\n", p->cmd_2_path);
+	printf("abs 1 : %d\n", pr->is_absolute_1);
+	printf("abs 2 : %d\n", pr->is_absolute_2);
 }
