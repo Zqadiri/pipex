@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 11:07:27 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/12 17:27:20 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/12 20:50:07 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,11 @@ void	execute_cmd_2(t_pipex *p, t_parse *pr, char **envv)
 	exit(1);
 }
 
-void	to_the_next_cmd(t_pipex *p, t_parse *pr, char **envv)
+void	to_the_next_cmd(t_pipex *p, t_parse *pr)
 {
-	p->pid = fork();
-	if (p->pid < 0)
+	p->pid_2 = fork();
+	if (p->pid_2 < 0)
 		error_code(4, p, pr);
-	else if (p->pid == 0)
-		execute_cmd_2(p, pr, envv);
 }
 
 void	print_args(t_parse *pr, t_pipex *p)

@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 18:20:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/12 17:27:53 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/12 20:50:02 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,12 +119,21 @@ int	main(int argc, char **argv, char **envv)
 		parse_args(p, argv, envv, pr);
 		if (pipe(p->fd) < 0)
 			error_code(1, p, pr);
-		p->pid = fork();
-		if (p->pid < 0)
+		p->pid_1 = fork();
+		if (p->pid_1 < 0)
 			error_code(4, p, pr);
-		else if (p->pid == 0)
+		else if (p->pid_1 == 0)
+		{
 			execute_cmd_1(p, pr, envv);
-		to_the_next_cmd(p, pr, envv);
+			to_the_next_cmd(p, pr);
+		}
+		else if (p->pid_2 == 0)
+			execute_cmd_2(p, pr, envv);
+		else if (p->pid_1 > 0 && p->pid_2 > 0)
+		{
+			waitpid(p->pid_1, p->status_1, WCONTINUED);
+			waitpid(p->pid_2, p->status_2, WCONTINUED);
+		}
 	}
 	else
 		error_code(5, p, pr);
