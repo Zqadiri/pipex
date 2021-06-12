@@ -6,11 +6,11 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 19:20:34 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/12 11:35:54 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/12 11:51:39 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../pipex.h"
 
 void	init_struct(t_pipex *p, t_parse *pr)
 {
