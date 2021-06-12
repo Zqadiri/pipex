@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 19:20:34 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/09 19:52:13 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/12 11:35:54 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,20 +94,46 @@ int	error_code(int code, t_pipex *p, t_parse *pr)
 	if (code == 2)
 	{
 		ft_putendl_fd("PATH variable is missing!", 2);
-		free_struct(p, pr);
 		exit (EXIT_FAILURE);
 	}
 	if (code == 3)
 	{
-		perror ("Error:");
-		// free_struct(p, pr);
-		// exit (EXIT_FAILURE);
+		perror ("Error");
+		return(1);
 	}
 	if (code == 4)
 	{
 		ft_putendl_fd("Fork Failed!", 2);
 		// free_struct(p, pr);
-		exit (EXIT_FAILURE);
+		return (1);
 	}
 	return (1);
+}
+
+void	print_args(t_parse *pr, t_pipex *p)  
+{
+	int	i;
+
+	i = 0;
+	printf("infile : %s\n", p->infile);
+	printf("outfile : %s\n", p->outfile);
+	while (pr->cmd_1[i])
+	{
+		printf("cmd_1 : %s\n", pr->cmd_1[i]);
+		i++;
+	}
+	i = 0;
+	while (pr->cmd_2[i])
+	{
+		printf("cmd_2 : %s\n", pr->cmd_2[i]);
+		i++;
+	}
+	i = 0;
+	while (p->path[i])
+	{
+		printf("path : %s\n", p->path[i]);
+		i++;
+	}
+	printf("cmd_1_path : %s\n", p->cmd_1_path);
+	printf("cmd_2_path : %s\n", p->cmd_2_path);
 }
