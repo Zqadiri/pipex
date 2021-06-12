@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 19:20:34 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/12 11:51:39 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/12 16:23:40 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,28 +59,12 @@ void	free_struct(t_pipex *p, t_parse *pr)
 	close(p->outfile_fd);
 }
 
-char	*get_path(char **envv)
+int	print_error(t_pipex *p)
 {
-	char	**temp;
-	char	*path;
-	int		i;
-
-	i = 0;
-	while (envv[i])
-	{
-		temp = ft_split(envv[i], '=');
-		if (!ft_strncmp("PATH", temp[0], 4))
-		{
-			path = ft_strdup(temp[1]);
-			free_d_pointer(temp);
-			return (path);
-		}
-		free_d_pointer(temp);
-		free(path);
-		path = NULL;
-		i++;
-	}
-	return (NULL);
+	write (2, "pipex: ", 7);
+	write(2, p->infile, ft_strlen(p->infile));
+	ft_putendl_fd(": No such file or directory", 2);
+	return (1);
 }
 
 int	error_code(int code, t_pipex *p, t_parse *pr)
@@ -96,44 +80,15 @@ int	error_code(int code, t_pipex *p, t_parse *pr)
 		ft_putendl_fd("PATH variable is missing!", 2);
 		exit (EXIT_FAILURE);
 	}
-	if (code == 3)
-	{
-		perror ("Error");
-		return(1);
-	}
 	if (code == 4)
 	{
 		ft_putendl_fd("Fork Failed!", 2);
-		// free_struct(p, pr);
-		return (1);
+		exit (EXIT_FAILURE);
+	}
+	if (code == 5)
+	{
+		ft_putendl_fd("Syntax Error!", 2);
+		exit (EXIT_FAILURE);
 	}
 	return (1);
-}
-
-void	print_args(t_parse *pr, t_pipex *p)  
-{
-	int	i;
-
-	i = 0;
-	printf("infile : %s\n", p->infile);
-	printf("outfile : %s\n", p->outfile);
-	while (pr->cmd_1[i])
-	{
-		printf("cmd_1 : %s\n", pr->cmd_1[i]);
-		i++;
-	}
-	i = 0;
-	while (pr->cmd_2[i])
-	{
-		printf("cmd_2 : %s\n", pr->cmd_2[i]);
-		i++;
-	}
-	i = 0;
-	while (p->path[i])
-	{
-		printf("path : %s\n", p->path[i]);
-		i++;
-	}
-	printf("cmd_1_path : %s\n", p->cmd_1_path);
-	printf("cmd_2_path : %s\n", p->cmd_2_path);
 }

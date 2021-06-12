@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 18:20:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/12 11:51:56 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/12 16:37:02 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ int	parse_args(t_pipex *p, char **argv, char **envv, t_parse *pr)
 	p->outfile = ft_strdup(argv[4]);
 	p->infile_fd = open(p->infile, O_RDWR);
 	if (p->infile_fd < 0)
-		error_code(3, p, pr);
+		print_error(p);
 	p->outfile_fd = open(p->outfile, O_RDWR | O_CREAT | O_TRUNC, S_IRWXU);
 	if (p->outfile_fd < 0)
-		error_code(3, p, pr);
+		print_error(p);
 	pr->cmd_1 = ft_split(argv[2], 32);
 	pr->cmd_2 = ft_split(argv[3], 32);
 	p->path = ft_split(pth, ':');
@@ -92,6 +92,8 @@ int	main(int argc, char **argv, char **envv)
 	t_pipex	*p;
 	t_parse	*pr;
 
+	p = NULL;
+	pr = NULL;
 	if (argc == 5)
 	{
 		p = malloc(sizeof(t_pipex));
@@ -104,17 +106,9 @@ int	main(int argc, char **argv, char **envv)
 			error_code(4, p, pr);
 		else if (p->pid == 0)
 			execute_cmd_1(p, pr, envv);
-		else
-		{
-			wait(NULL);
-			execute_cmd_2(p, pr, envv);
-		}
-		free_struct(p, pr);
+		to_the_next_cmd(p, pr, envv);
 	}
 	else
-	{
-	 	ft_putendl_fd("Syntax Error!", 2);
-		exit (EXIT_FAILURE);
-	}
+		error_code(5, p, pr);
 	return (1);
 }

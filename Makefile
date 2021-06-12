@@ -6,7 +6,7 @@
 #    By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/07 18:20:56 by zqadiri           #+#    #+#              #
-#    Updated: 2021/06/12 13:37:23 by zqadiri          ###   ########.fr        #
+#    Updated: 2021/06/12 16:28:00 by zqadiri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRCS = 	./src/pipex.c \
 
 OBJS = $(SRCS:.c=.o)
 
-FLAGS= -Wall -Wextra -Werror -g -fsanitize=address
+FLAGS= -Wall -Wextra -Werror -g 
 RM = rm -f
 CC = gcc
 
