@@ -6,7 +6,7 @@
 #    By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/07 18:20:56 by zqadiri           #+#    #+#              #
-#    Updated: 2021/06/12 16:28:00 by zqadiri          ###   ########.fr        #
+#    Updated: 2021/06/13 16:54:12 by zqadiri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ NAME = pipex
 
 SRCS = 	./src/pipex.c \
 		./src/helpers.c \
-		./src/exec.c
+		./src/exec.c \
+		./src/errors.c
 
 OBJS = $(SRCS:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 18:20:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/12 20:50:02 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/13 16:52:17 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	find_path(t_pipex *p, char	*cmd, char **final_path)
 		fd = open(possible_path, O_RDONLY);
 		if (fd > 0)
 		{
-			
 			*final_path = ft_strdup(possible_path);
 			free(possible_path);
 			possible_path = NULL;
@@ -66,7 +65,7 @@ int	get_cmd_path(t_pipex *p, t_parse *pr)
 	return (1);
 }
 
-int	check_cmd_path(char  *cmd_path)
+int	check_cmd_path(char *cmd_path)
 {
 	int	fd;
 
@@ -74,7 +73,7 @@ int	check_cmd_path(char  *cmd_path)
 	if (fd < 0)
 	{
 		write (2, "pipex: ", 7);
-		write(2,cmd_path, ft_strlen(cmd_path));
+		write(2, cmd_path, ft_strlen(cmd_path));
 		ft_putendl_fd(": command not found", 2);
 		return (-1);
 	}
@@ -86,7 +85,6 @@ int	parse_args(t_pipex *p, char **argv, char **envv, t_parse *pr)
 	char	*pth;
 
 	pth = get_path(envv);
-	init_struct(p, pr);
 	p->infile = ft_strdup(argv[1]);
 	p->outfile = ft_strdup(argv[4]);
 	p->infile_fd = open(p->infile, O_RDWR);
@@ -115,28 +113,16 @@ int	main(int argc, char **argv, char **envv)
 	if (argc == 5)
 	{
 		p = malloc(sizeof(t_pipex));
+		if (p == NULL)
+			exit(EXIT_FAILURE);
 		pr = malloc(sizeof(t_parse));
+		if (pr == NULL)
+			exit (EXIT_FAILURE);
+		init_struct(p, pr);
 		parse_args(p, argv, envv, pr);
-		if (pipe(p->fd) < 0)
-			error_code(1, p, pr);
-		p->pid_1 = fork();
-		if (p->pid_1 < 0)
-			error_code(4, p, pr);
-		else if (p->pid_1 == 0)
-		{
-			execute_cmd_1(p, pr, envv);
-			to_the_next_cmd(p, pr);
-		}
-		else if (p->pid_2 == 0)
-			execute_cmd_2(p, pr, envv);
-		else if (p->pid_1 > 0 && p->pid_2 > 0)
-		{
-			waitpid(p->pid_1, p->status_1, WCONTINUED);
-			waitpid(p->pid_2, p->status_2, WCONTINUED);
-		}
+		start_exec(p, pr, envv);
 	}
 	else
 		error_code(5, p, pr);
-	// system ("leaks pipex");
 	return (1);
 }
