@@ -6,12 +6,11 @@
 #    By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/07 18:20:56 by zqadiri           #+#    #+#              #
-#    Updated: 2021/06/13 16:54:12 by zqadiri          ###   ########.fr        #
+#    Updated: 2021/06/15 16:07:33 by zqadiri          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 ifneq (,$(findstring xterm,${TERM}))
-	GREEN := $(shell tput -Txterm setaf 2)
 	YELLOW       := $(shell tput -Txterm setaf 3)
 	PURPLE       := $(shell tput -Txterm setaf 5)
 	RESET := $(shell tput -Txterm sgr0)
@@ -40,7 +39,7 @@ all: $(NAME)
 $(NAME): utils_all
 	@cp ./utils/utils.a .
 	@$(CC) $(FLAGS) $(SRCS) utils.a -o $(NAME)
-	@echo "${YELLOW}Building pipex ...${RESET}"
+	@echo "🌼${YELLOW}Building pipex ...${RESET}"
 
 clean: utils_clean
 	@$(RM) utils.a 

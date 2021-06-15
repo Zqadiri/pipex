@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 16:53:34 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/13 16:55:05 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/15 15:02:50 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	error_code(int code, t_pipex *p, t_parse *pr)
 	if (code == 4)
 	{
 		ft_putendl_fd("Fork Failed!", 2);
-		exit (EXIT_FAILURE);
+		exit (1);
 	}
 	if (code == 5)
 	{
