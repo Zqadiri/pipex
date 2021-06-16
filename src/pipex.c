@@ -6,11 +6,14 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 18:20:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/15 16:13:53 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/16 11:08:21 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
+
+// ! check empty strings 
+// ! 
 
 int	find_path(t_pipex *p, char	*cmd, char **final_path)
 {
@@ -48,11 +51,9 @@ int	get_cmd_path(t_pipex *p, t_parse *pr)
 	ret = -1;
 	if (*pr->cmd_1 == NULL || *pr->cmd_2 == NULL)
 		error_code(2, p, pr);
-	if (!ft_strncmp(pr->cmd_1[0], "/", 1) || !ft_strncmp(pr->cmd_1[0], "./", 2)
-		|| !ft_strncmp(pr->cmd_1[0], "../", 3) || !ft_strncmp(pr->cmd_1[0], "\\", 1) )
+	if (!ft_strncmp(pr->cmd_1[0], "/", 1) || !ft_strncmp(pr->cmd_1[0], "\\", 1))
 		pr->is_absolute_1 = 1;
-	if (!ft_strncmp(pr->cmd_2[0], "/", 1) || !ft_strncmp(pr->cmd_2[0], "./", 2)
-		|| !ft_strncmp(pr->cmd_2[0], "../", 3))
+	if (!ft_strncmp(pr->cmd_2[0], "/", 1) || !ft_strncmp(pr->cmd_1[0], "\\", 1))
 		pr->is_absolute_2 = 1;
 	if (!pr->is_absolute_1)
 		find_path(p, pr->cmd_1[0], &p->cmd_1_path);
@@ -62,21 +63,6 @@ int	get_cmd_path(t_pipex *p, t_parse *pr)
 		find_path(p, pr->cmd_2[0], &p->cmd_2_path);
 	else
 		p->cmd_2_path = ft_strdup(pr->cmd_2[0]);
-	return (1);
-}
-
-int	check_cmd_path(char *cmd_path)
-{
-	int	fd;
-
-	fd = open(cmd_path, O_RDONLY);
-	if (fd < 0)
-	{
-		write (2, "pipex: ", 7);
-		write(2, cmd_path, ft_strlen(cmd_path));
-		ft_putendl_fd(": command not found", 2);
-		return (-1);
-	}
 	return (1);
 }
 
@@ -110,7 +96,9 @@ int	main(int argc, char **argv, char **envv)
 
 	p = NULL;
 	pr = NULL;
-	if (argc == 5)
+	if (argc != 5)
+		error_code(5, p, pr);
+	else
 	{
 		p = malloc(sizeof(t_pipex));
 		if (p == NULL)
@@ -118,11 +106,12 @@ int	main(int argc, char **argv, char **envv)
 		pr = malloc(sizeof(t_parse));
 		if (pr == NULL)
 			exit (EXIT_FAILURE);
+		p->fd = malloc(2 * sizeof(int));
+		if (p->fd == NULL)
+			exit(EXIT_FAILURE);
 		init_struct(p, pr);
 		parse_args(p, argv, envv, pr);
 		start_exec(p, pr, envv);
 	}
-	else
-		error_code(5, p, pr);
 	return (0);
 }

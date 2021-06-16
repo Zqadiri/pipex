@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 18:20:21 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/15 16:17:47 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/16 10:44:29 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,12 @@ typedef struct s_pipex
 	int		infile_fd;
 	char	*outfile;
 	int		outfile_fd;
-	int		fd[2];
+	int		*fd;
 	char	**path;
 	char	*cmd_1_path;
 	char	*cmd_2_path;
 	int		pid_1;
 	int		pid_2;
-	int		*status_1;
-	int		*status_2;
 }	t_pipex;
 
 char	*get_path(char **envv);
@@ -55,7 +53,6 @@ void	print_args(t_parse *pr, t_pipex *p);
 int		print_error(t_pipex *pr);
 void	free_d_pointer(char **temp);
 int		check_cmd_path(char *cmd_path);
-void	wait_child(t_pipex *p);
 void	start_exec(t_pipex *p, t_parse *pr, char **envv);
 
 #endif

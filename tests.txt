@@ -1,0 +1,3 @@
+< makefile ls | cat -e > bash
+< fakefile cat | ls -la > bash 
+< pipex.h cat | grep void > bash
