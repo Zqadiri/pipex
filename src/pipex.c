@@ -6,14 +6,14 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 18:20:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/16 11:08:21 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/16 16:13:21 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
 // ! check empty strings 
-// ! 
+// ! errors
 
 int	find_path(t_pipex *p, char	*cmd, char **final_path)
 {
@@ -79,6 +79,8 @@ int	parse_args(t_pipex *p, char **argv, char **envv, t_parse *pr)
 	p->outfile_fd = open(p->outfile, O_RDWR | O_CREAT | O_TRUNC, S_IRWXU);
 	if (p->outfile_fd < 0)
 		print_error(p);
+	if (!strcmp(argv[2], "\0") || !strcmp(argv[3], "\0"))
+		exit(EXIT_SUCCESS);
 	pr->cmd_1 = ft_split(argv[2], 32);
 	pr->cmd_2 = ft_split(argv[3], 32);
 	p->path = ft_split(pth, ':');
