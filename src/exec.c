@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 11:07:27 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/16 11:14:18 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/16 11:23:14 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	execute_cmd_2(t_pipex *p, t_parse *pr, char **envv)
 		write (2, "pipex: ", 7);
 		write(2, pr->cmd_2[0], ft_strlen(pr->cmd_2[0]));
 		ft_putendl_fd(": command not found", 2);
-		pr->exit_value = 127;
 	}
 	close(p->fd[1]);
 	dup2(p->outfile_fd, 1);
@@ -63,15 +62,6 @@ void	execute_cmd_2(t_pipex *p, t_parse *pr, char **envv)
 	if (execve(p->cmd_2_path, pr->cmd_2, envv))
 		free_struct(p, pr);
 }
-
-// void	exec_2(t_pipex *p, t_parse *pr, char **envv)
-// {
-// 	p->pid_2 = fork();
-// 	if (p->pid_2 < 0)
-// 		error_code(4, p, pr);
-// 	if (p->pid_2 == 0)
-// 		execute_cmd_2(p, pr, envv);
-// }
 
 void	start_exec(t_pipex *p, t_parse *pr, char **envv)
 {
@@ -98,7 +88,6 @@ void	start_exec(t_pipex *p, t_parse *pr, char **envv)
 	close(p->fd[0]);
 	waitpid(p->pid_1, &status, WCONTINUED);
 	waitpid(p->pid_2, &status, WCONTINUED);
-	if (WIFEXITED(status))
-		pr->exit_value = WEXITSTATUS(status);
+	pr->exit_value = WEXITSTATUS(status);
 	exit (pr->exit_value);
 }
