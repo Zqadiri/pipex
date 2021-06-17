@@ -6,11 +6,24 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 11:07:27 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/16 11:23:14 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/17 18:19:10 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
+
+void	check_abs_cmd(char	**cmd, t_pipex *p, t_parse *pr)
+{
+	int	fd;
+
+	fd = open(cmd[0], O_RDONLY);
+	if (p->cmd_1_path == NULL || fd < 0)
+	{
+		write (2, "pipex: ", 7);
+		write(2, pr->cmd_1[0], ft_strlen(pr->cmd_1[0]));
+		ft_putendl_fd(": command not found", 2);
+	}
+}
 
 /*
 ** dup2 takes an old file descriptor to be cloned as the first parameter 
@@ -26,14 +39,6 @@
 
 void	execute_cmd_1(t_pipex *p, t_parse *pr, char **envv)
 {
-	if (p->cmd_1_path == NULL)
-	{
-		write (2, "pipex: ", 7);
-		write(2, pr->cmd_1[0], ft_strlen(pr->cmd_1[0]));
-		ft_putendl_fd(": command not found", 2);
-	}
-	if (p->infile_fd == -1)
-		return ;
 	close(p->fd[0]);
 	dup2(p->infile_fd, 0);
 	dup2(p->fd[1], 1);
@@ -49,12 +54,9 @@ void	execute_cmd_1(t_pipex *p, t_parse *pr, char **envv)
 
 void	execute_cmd_2(t_pipex *p, t_parse *pr, char **envv)
 {
-	if (p->cmd_2_path == NULL)
-	{
-		write (2, "pipex: ", 7);
-		write(2, pr->cmd_2[0], ft_strlen(pr->cmd_2[0]));
-		ft_putendl_fd(": command not found", 2);
-	}
+	p->outfile_fd = open(p->outfile, O_RDWR | O_CREAT | O_TRUNC, S_IRWXU);
+	if (p->outfile_fd < 0)
+		print_error(p->outfile);
 	close(p->fd[1]);
 	dup2(p->outfile_fd, 1);
 	dup2(p->fd[0], 0);

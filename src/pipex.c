@@ -6,14 +6,11 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 18:20:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/16 16:13:21 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/17 18:19:28 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
-
-// ! check empty strings 
-// ! errors
 
 int	find_path(t_pipex *p, char	*cmd, char **final_path)
 {
@@ -58,11 +55,17 @@ int	get_cmd_path(t_pipex *p, t_parse *pr)
 	if (!pr->is_absolute_1)
 		find_path(p, pr->cmd_1[0], &p->cmd_1_path);
 	else
+	{
 		p->cmd_1_path = ft_strdup(pr->cmd_1[0]);
+		check_abs_cmd(pr->cmd_1, p, pr);
+	}
 	if (!pr->is_absolute_2)
 		find_path(p, pr->cmd_2[0], &p->cmd_2_path);
 	else
+	{
 		p->cmd_2_path = ft_strdup(pr->cmd_2[0]);
+		check_abs_cmd(pr->cmd_2, p, pr);
+	}
 	return (1);
 }
 
@@ -75,10 +78,7 @@ int	parse_args(t_pipex *p, char **argv, char **envv, t_parse *pr)
 	p->outfile = ft_strdup(argv[4]);
 	p->infile_fd = open(p->infile, O_RDWR);
 	if (p->infile_fd < 0)
-		print_error(p);
-	p->outfile_fd = open(p->outfile, O_RDWR | O_CREAT | O_TRUNC, S_IRWXU);
-	if (p->outfile_fd < 0)
-		print_error(p);
+		print_error(p->infile);
 	if (!strcmp(argv[2], "\0") || !strcmp(argv[3], "\0"))
 		exit(EXIT_SUCCESS);
 	pr->cmd_1 = ft_split(argv[2], 32);

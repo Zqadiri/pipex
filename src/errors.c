@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 16:53:34 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/15 15:02:50 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/17 13:52:49 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ void	free_struct(t_pipex *p, t_parse *pr)
 	close(p->outfile_fd);
 }
 
-int	print_error(t_pipex *p)
+int	print_error(char *file_error)
 {
 	write (2, "pipex: ", 7);
-	write(2, p->infile, ft_strlen(p->infile));
-	ft_putendl_fd(": No such file or directory", 2);
-	return (1);
+	write(2, file_error, ft_strlen(file_error));
+	perror(" ");
+	exit(1);
 }
 
 int	error_code(int code, t_pipex *p, t_parse *pr)
