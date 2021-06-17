@@ -6,25 +6,25 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 11:07:27 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/17 20:57:36 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/17 21:19:34 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-void	check_abs_cmd(char	**cmd, char *path)
-{
-	int	fd;
+// void	check_abs_cmd(char	**cmd, char *path)
+// {
+// 	int	fd;
 
- 	fd = open(path, O_RDONLY);
-	if (path == NULL || fd < 0)
-	{
-		write (2, "pipex: ", 7);
-		write(2, cmd[0], ft_strlen(cmd[0]));
-		ft_putendl_fd(": command not found", 2);
-		// ;
-	}
-}
+//  	fd = open(path, O_RDONLY);
+// 	if (path == NULL || fd < 0)
+// 	{
+// 		write (2, "pipex: ", 7);
+// 		write(2, cmd[0], ft_strlen(cmd[0]));
+// 		ft_putendl_fd(": command not found", 2);
+// 		// ;
+// 	}
+// }
 
 /*
 ** dup2 takes an old file descriptor to be cloned as the first parameter 
