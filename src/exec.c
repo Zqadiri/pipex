@@ -6,22 +6,23 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 11:07:27 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/17 18:19:10 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/17 20:57:36 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-void	check_abs_cmd(char	**cmd, t_pipex *p, t_parse *pr)
+void	check_abs_cmd(char	**cmd, char *path)
 {
 	int	fd;
 
-	fd = open(cmd[0], O_RDONLY);
-	if (p->cmd_1_path == NULL || fd < 0)
+ 	fd = open(path, O_RDONLY);
+	if (path == NULL || fd < 0)
 	{
 		write (2, "pipex: ", 7);
-		write(2, pr->cmd_1[0], ft_strlen(pr->cmd_1[0]));
+		write(2, cmd[0], ft_strlen(cmd[0]));
 		ft_putendl_fd(": command not found", 2);
+		// ;
 	}
 }
 
@@ -39,6 +40,16 @@ void	check_abs_cmd(char	**cmd, t_pipex *p, t_parse *pr)
 
 void	execute_cmd_1(t_pipex *p, t_parse *pr, char **envv)
 {
+	int	fd;
+
+	fd = open(p->cmd_1_path, O_RDONLY);
+	if (p->cmd_1_path == NULL || fd < 0)
+	{
+		write (2, "pipex: ", 7);
+		write(2, pr->cmd_1[0], ft_strlen(pr->cmd_1[0]));
+		ft_putendl_fd(": command not found", 2);
+		exit (0);
+	}
 	close(p->fd[0]);
 	dup2(p->infile_fd, 0);
 	dup2(p->fd[1], 1);
@@ -54,6 +65,16 @@ void	execute_cmd_1(t_pipex *p, t_parse *pr, char **envv)
 
 void	execute_cmd_2(t_pipex *p, t_parse *pr, char **envv)
 {
+	int	fd;
+
+	fd = open(p->cmd_2_path, O_RDONLY);
+	if (p->cmd_2_path == NULL || fd < 0)
+	{
+		write (2, "pipex: ", 7);
+		write(2, pr->cmd_2[0], ft_strlen(pr->cmd_2[0]));
+		ft_putendl_fd(": command not found", 2);
+		exit (127);
+	}
 	p->outfile_fd = open(p->outfile, O_RDWR | O_CREAT | O_TRUNC, S_IRWXU);
 	if (p->outfile_fd < 0)
 		print_error(p->outfile);

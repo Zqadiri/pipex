@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 18:20:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/17 18:19:28 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/17 20:57:35 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,6 @@ int	find_path(t_pipex *p, char	*cmd, char **final_path)
 
 int	get_cmd_path(t_pipex *p, t_parse *pr)
 {
-	int	ret;
-
-	ret = -1;
 	if (*pr->cmd_1 == NULL || *pr->cmd_2 == NULL)
 		error_code(2, p, pr);
 	if (!ft_strncmp(pr->cmd_1[0], "/", 1) || !ft_strncmp(pr->cmd_1[0], "\\", 1))
@@ -55,17 +52,13 @@ int	get_cmd_path(t_pipex *p, t_parse *pr)
 	if (!pr->is_absolute_1)
 		find_path(p, pr->cmd_1[0], &p->cmd_1_path);
 	else
-	{
 		p->cmd_1_path = ft_strdup(pr->cmd_1[0]);
-		check_abs_cmd(pr->cmd_1, p, pr);
-	}
+	check_abs_cmd(pr->cmd_1, p->cmd_1_path);
 	if (!pr->is_absolute_2)
 		find_path(p, pr->cmd_2[0], &p->cmd_2_path);
 	else
-	{
 		p->cmd_2_path = ft_strdup(pr->cmd_2[0]);
-		check_abs_cmd(pr->cmd_2, p, pr);
-	}
+	check_abs_cmd(pr->cmd_2, p->cmd_2_path);
 	return (1);
 }
 

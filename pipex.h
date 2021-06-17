@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 18:20:21 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/17 18:17:23 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/17 18:33:51 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ int		print_error(char *file_error);
 void	free_d_pointer(char **temp);
 int		check_cmd_path(char *cmd_path);
 void	start_exec(t_pipex *p, t_parse *pr, char **envv);
-void	check_abs_cmd(char	**cmd, t_pipex *p, t_parse *pr);
+void	check_abs_cmd(char	**cmd, char	*path);
 
 #endif
