@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 18:20:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/17 21:15:18 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/18 15:08:15 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ int	get_cmd_path(t_pipex *p, t_parse *pr)
 		pr->is_absolute_1 = 1;
 	if (!ft_strncmp(pr->cmd_2[0], "/", 1) || !ft_strncmp(pr->cmd_1[0], "\\", 1))
 		pr->is_absolute_2 = 1;
-	if (!pr->is_absolute_1)
+	if (pr->is_absolute_1 != 1)
 		find_path(p, pr->cmd_1[0], &p->cmd_1_path);
 	else
 		p->cmd_1_path = ft_strdup(pr->cmd_1[0]);
-	if (!pr->is_absolute_2)
+	if (pr->is_absolute_2 != 1)
 		find_path(p, pr->cmd_2[0], &p->cmd_2_path);
 	else
 		p->cmd_2_path = ft_strdup(pr->cmd_2[0]);
@@ -67,9 +67,6 @@ int	parse_args(t_pipex *p, char **argv, char **envv, t_parse *pr)
 	pth = get_path(envv);
 	p->infile = ft_strdup(argv[1]);
 	p->outfile = ft_strdup(argv[4]);
-	p->infile_fd = open(p->infile, O_RDWR);
-	if (p->infile_fd < 0)
-		print_error(p->infile);
 	if (!strcmp(argv[2], "\0") || !strcmp(argv[3], "\0"))
 		exit(EXIT_SUCCESS);
 	pr->cmd_1 = ft_split(argv[2], 32);
@@ -102,7 +99,7 @@ int	main(int argc, char **argv, char **envv)
 		p->fd = malloc(2 * sizeof(int));
 		if (p->fd == NULL)
 			exit(EXIT_FAILURE);
-		init_struct(p, pr);
+		
 		parse_args(p, argv, envv, pr);
 		start_exec(p, pr, envv);
 	}

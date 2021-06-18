@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 16:53:34 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/17 18:41:36 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/18 14:56:42 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	free_struct(t_pipex *p, t_parse *pr)
 {
+
 	if (pr->cmd_1)
 		free_d_pointer(pr->cmd_1);
 	if (pr->cmd_2)
@@ -34,12 +35,11 @@ void	free_struct(t_pipex *p, t_parse *pr)
 	close(p->outfile_fd);
 }
 
-int	print_error(char *file_error)
+void	print_error(char *file_error)
 {
 	write (2, "pipex: ", 7);
 	write(2, file_error, ft_strlen(file_error));
 	perror(" ");
-	exit(1);
 }
 
 int	error_code(int code, t_pipex *p, t_parse *pr)
