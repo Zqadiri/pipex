@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 11:07:27 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/18 15:14:26 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/18 15:37:30 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,7 @@ void	start_exec(t_pipex *p, t_parse *pr, char **envv)
 	if (p->pid_1 < 0)
 		error_code(4, p, pr);
 	else if (p->pid_1 == 0)
-	{
-		// if (p->infile_fd < 0)
-		// 	exit(EXIT_SUCCESS);
-		// else
-			execute_cmd_1(p, pr, envv);
-	}
+		execute_cmd_1(p, pr, envv);
 	p->pid_2 = fork();
 	if (p->pid_2 < 0)
 		error_code(4, p, pr);

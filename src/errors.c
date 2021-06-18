@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 16:53:34 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/18 14:56:42 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/18 15:33:30 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	free_struct(t_pipex *p, t_parse *pr)
 {
-
 	if (pr->cmd_1)
 		free_d_pointer(pr->cmd_1);
 	if (pr->cmd_2)

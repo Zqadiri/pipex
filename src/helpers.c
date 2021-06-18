@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 19:20:34 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/18 15:01:10 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/18 15:35:30 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,46 +54,10 @@ void	free_d_pointer(char **temp)
 	i = 0;
 	while (temp[i])
 	{
-		if (temp[i])
-		{
-			free(temp[i]);
-			temp[i] = NULL;
-		}
+		free(temp[i]);
+		temp[i] = NULL;
 		i++;
 	}
-	if (temp)
-	{
-		free(temp);
-		temp = NULL;
-	}
-}
-
-void	print_args(t_parse *pr, t_pipex *p)
-{
-	int	i;
-
-	i = 0;
-	printf("infile : %s\n", p->infile);
-	printf("outfile : %s\n", p->outfile);
-	while (pr->cmd_1[i])
-	{
-		printf("cmd_1 : %s\n", pr->cmd_1[i]);
-		i++;
-	}
-	i = 0;
-	while (pr->cmd_2[i])
-	{
-		printf("cmd_2 : %s\n", pr->cmd_2[i]);
-		i++;
-	}
-	i = 0;
-	while (p->path[i])
-	{
-		printf("path : %s\n", p->path[i]);
-		i++;
-	}
-	printf("cmd_1_path : %s\n", p->cmd_1_path);
-	printf("cmd_2_path : %s\n", p->cmd_2_path);
-	printf("abs 1: %d\n", pr->is_absolute_1);
-	printf("abs 2: %d\n", pr->is_absolute_2);
+	free(temp);
+	temp = NULL;
 }

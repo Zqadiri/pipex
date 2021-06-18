@@ -4,6 +4,7 @@
 # 
 .DS_Store
 pipex.dSYM
+.vscode
 
 # Object files
 *.o

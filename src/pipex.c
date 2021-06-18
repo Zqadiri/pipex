@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 18:20:17 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/18 15:08:15 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/18 15:33:19 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ int	main(int argc, char **argv, char **envv)
 		p->fd = malloc(2 * sizeof(int));
 		if (p->fd == NULL)
 			exit(EXIT_FAILURE);
-		
 		parse_args(p, argv, envv, pr);
 		start_exec(p, pr, envv);
 	}
