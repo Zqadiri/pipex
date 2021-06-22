@@ -6,7 +6,7 @@
 /*   By: zqadiri <zqadiri@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/08 11:07:27 by zqadiri           #+#    #+#             */
-/*   Updated: 2021/06/18 15:37:30 by zqadiri          ###   ########.fr       */
+/*   Updated: 2021/06/20 14:02:33 by zqadiri          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,12 @@ void	execute_cmd_2(t_pipex *p, t_parse *pr, char **envv)
 {
 	int	fd;
 
+	p->outfile_fd = open(p->outfile, O_RDWR | O_CREAT | O_TRUNC, S_IRWXU);
+	if (p->outfile_fd < 0)
+	{
+		print_error(p->outfile);
+		exit (1);
+	}
 	fd = open(p->cmd_2_path, O_RDONLY);
 	if (p->cmd_2_path == NULL || fd < 0)
 	{
@@ -66,12 +72,6 @@ void	execute_cmd_2(t_pipex *p, t_parse *pr, char **envv)
 		write(2, pr->cmd_2[0], ft_strlen(pr->cmd_2[0]));
 		ft_putendl_fd(": command not found", 2);
 		exit (127);
-	}
-	p->outfile_fd = open(p->outfile, O_RDWR | O_CREAT | O_TRUNC, S_IRWXU);
-	if (p->outfile_fd < 0)
-	{
-		print_error(p->outfile);
-		exit (1);
 	}
 	close(p->fd[1]);
 	dup2(p->outfile_fd, 1);

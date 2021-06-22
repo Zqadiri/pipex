@@ -3,3 +3,9 @@
 < pipex.h cat | grep void > bash
 < makefile cat | fake_cmd > bash 
 < makefile cat | ls void > bash
+< makefile cat | grep lorum > bash
+< makefile cat | grep lorum > bash  --> chmod 0
+< bash  cat | gre lorum > bash  --> chmod 0
+< makefile fake | fake > bash  --> chmod 0
+< makefile cat | > bash 
+unset path
